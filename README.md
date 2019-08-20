@@ -5,7 +5,7 @@ Please follow these guidelines for implementation:
 
 1. Create an account on https://www.cookiebot.com and add the domain name of your website. Copy out the "Cookiebot ID" from the domain group you have registered the domain under (tab 'Your Scripts').
 
-2. In GTM, add the "Cookiebot CMP" tag and save the Cookie ID into the corresponding field.
+2. In GTM, add the "Cookiebot CMP" tag with "All Pages" as Firing Trigger and save the Cookie ID into the corresponding field.
 
 3. Add the GTM variable template "Cookiebot Consent State" (https://github.com/cybotcorp/gtm-templates-cookiebot-variable) to your GTM configuration and name it "Cookie Consent".
 
