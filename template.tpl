@@ -1,4 +1,4 @@
-﻿___INFO___
+___INFO___
 
 {
   "displayName": "Cookiebot CMP",
@@ -122,21 +122,17 @@ ___WEB_PERMISSIONS___
 ___SANDBOXED_JS_FOR_WEB_TEMPLATE___
 
 const injectScript = require('injectScript');
+const encodeUriComponent = require('encodeUriComponent');
 const queryPermission = require('queryPermission');
 const cookiebotSerial = data.Serial;
 const IABEnabled = data.IABFramework;
+const language = data.Language;
 
-let scriptUrl = 'https://consent.cookiebot.com/uc.js?cbid=' + cookiebotSerial;
-let language = data.Language;
+let scriptUrl = 'https://consent.cookiebot.com/uc.js?cbid=' + encodeUriComponent(cookiebotSerial);
 
 if (language === 'variable')
 {
-  language = data.languageVariable;
-}
-
-if(language !== 'auto')
-{
-  scriptUrl += '&culture=' + language;
+  scriptUrl += '&culture=' + encodeUriComponent(data.LanguageVariable);
 }
 
 if(IABEnabled)
@@ -145,7 +141,7 @@ if(IABEnabled)
 }
 
 if (queryPermission('inject_script', scriptUrl)) {
-  injectScript(scriptUrl, data.gtmOnSuccess(), data.gtmOnFailure());
+  injectScript(scriptUrl, data.gtmOnSuccess, data.gtmOnFailure);
 } else {
   data.gtmOnFailure();
 }
@@ -153,4 +149,4 @@ if (queryPermission('inject_script', scriptUrl)) {
 
 ___NOTES___
 
-Created on 19.8.2019 14.37.45
+Created on 23.8.2019 08.53.59
