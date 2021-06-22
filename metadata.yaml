@@ -1,5 +1,7 @@
 homepage: "www.cookiebot.com"
 documentation: "https://support.cookiebot.com/hc/en-us/articles/360003793854"
 versions:
+  - sha:  d76c9f4
+    changeNotes: Support of standard consent types (ad_storage, analytics_storage, functionality_storage, personalization_storage, security_storage), Default Consent State and Additional Consent
   - sha:  e262384
     changeNotes: Add GTM terms and categories 
