@@ -5,14 +5,18 @@ Template Gallery Developer Terms of Service available at
 https://developers.google.com/tag-manager/gallery-tos (or such other URL as
 Google may provide), as modified from time to time.
 
+
 ___INFO___
 
 {
   "displayName": "Cookiebot CMP",
-  "description": "Cookiebot is a Consent Management Provider (CMP) that helps make your use of cookies and online tracking GDPR and ePR compliant by obtaining consent from website users. More on https://cookiebot.com.",
-  "categories": ["TAG_MANAGEMENT", "PERSONALIZATION"],
+  "description": "Cookiebot is a Consent Management Platform (CMP) that helps make your use of cookies and online tracking compliant with data protection legislations like GDPR and CCPA. More on https://cookiebot.com.",
+  "categories": [
+    "TAG_MANAGEMENT",
+    "PERSONALIZATION"
+  ],
   "securityGroups": [],
-  "id": "cvt_temp_public_id",
+  "id": "cookiebot",
   "type": "TAG",
   "version": 1,
   "brand": {
@@ -30,8 +34,8 @@ ___TEMPLATE_PARAMETERS___
 
 [
   {
-    "notSetText": "Please enter the 'Domain Group ID' found under the tab named 'Your Scripts' in Cookiebot in the format 'XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX'",
-    "help": "Create an account on Cookiebot.com and copy 'Domain Group ID' from the tab 'Your Scripts' in Cookiebot.",
+    "notSetText": "Please enter the \u0027Domain Group ID\u0027 found under the tab named \u0027Your Scripts\u0027 in Cookiebot in the format \u0027XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX\u0027",
+    "help": "Create an account on Cookiebot.com and copy \u0027Domain Group ID\u0027 from the tab \u0027Your Scripts\u0027 in Cookiebot.",
     "valueValidators": [
       {
         "args": [
@@ -86,13 +90,113 @@ ___TEMPLATE_PARAMETERS___
     "type": "TEXT"
   },
   {
-    "help": "Enabled IAB Europe's Transparency & Consent Framework if your site is displaying ads from one or more IAB Vendors.",
+    "help": "Enabled IAB Europe\u0027s Transparency \u0026 Consent Framework if your site is displaying ads from one or more IAB Vendors.",
     "simpleValueType": true,
     "name": "iabFramework",
     "checkboxText": "Enable IAB Transparency and Consent Framework",
     "type": "CHECKBOX"
+  },
+  {
+    "type": "GROUP",
+    "name": "Default Consent",
+    "displayName": "Default Consent State",
+    "groupStyle": "ZIPPY_OPEN_ON_PARAM",
+    "subParams": [
+      {
+        "type": "SELECT",
+        "name": "defaultConsentPreferences",
+        "displayName": "Preferences (consent types functionality_storage and personalization_storage)",
+        "selectItems": [
+          {
+            "value": "denied",
+            "displayValue": "Denied"
+          },
+          {
+            "value": "granted",
+            "displayValue": "Granted"
+          }
+        ],
+        "simpleValueType": true,
+        "help": "Select default consent state for preference cookies",
+        "defaultValue": "denied"
+      },
+      {
+        "type": "SELECT",
+        "name": "defaultConsentStatistics",
+        "displayName": "Statistics (consent type analytics_storage)",
+        "selectItems": [
+          {
+            "value": "denied",
+            "displayValue": "Denied"
+          },
+          {
+            "value": "granted",
+            "displayValue": "Granted"
+          }
+        ],
+        "simpleValueType": true,
+        "help": "Select default consent state for statistics cookies",
+        "defaultValue": "denied"
+      },
+      {
+        "type": "SELECT",
+        "name": "defaultConsentMarketing",
+        "displayName": "Marketing (consent type ad_storage)",
+        "selectItems": [
+          {
+            "value": "denied",
+            "displayValue": "Denied"
+          },
+          {
+            "value": "granted",
+            "displayValue": "Granted"
+          }
+        ],
+        "simpleValueType": true,
+        "help": "Select default consent state for marketing cookies",
+        "defaultValue": "denied"
+      }
+    ],
+    "help": "Default measurement capabilities before the end user has consented."
   }
 ]
+
+
+___SANDBOXED_JS_FOR_WEB_TEMPLATE___
+
+const injectScript = require('injectScript');
+const encodeUriComponent = require('encodeUriComponent');
+const queryPermission = require('queryPermission');
+const setDefaultConsentState =require('setDefaultConsentState');
+const cookiebotSerial = data.serial;
+const IABEnabled = data.iabFramework;
+const language = data.language;
+
+let scriptUrl = 'https://consent.cookiebot.com/uc.js?cbid=' + encodeUriComponent(cookiebotSerial);
+
+if (language === 'variable')
+{
+  scriptUrl += '&culture=' + encodeUriComponent(data.languageVariable);
+}
+
+if(IABEnabled)
+{
+  scriptUrl += '&framework=IAB';
+}
+
+setDefaultConsentState({
+  'functionality_storage': data.defaultConsentPreferences,
+  'personalization_storage': data.defaultConsentPreferences,
+  'analytics_storage': data.defaultConsentStatistics,
+  'ad_storage': data.defaultConsentMarketing,
+  'security_storage': 'granted'
+});
+
+if (queryPermission('inject_script', scriptUrl)) {
+  injectScript(scriptUrl, data.gtmOnSuccess, data.gtmOnFailure);
+} else {
+  data.gtmOnFailure();
+}
 
 
 ___WEB_PERMISSIONS___
@@ -123,38 +227,194 @@ ___WEB_PERMISSIONS___
       "isEditedByUser": true
     },
     "isRequired": true
+  },
+  {
+    "instance": {
+      "key": {
+        "publicId": "access_consent",
+        "versionId": "1"
+      },
+      "param": [
+        {
+          "key": "consentTypes",
+          "value": {
+            "type": 2,
+            "listItem": [
+              {
+                "type": 3,
+                "mapKey": [
+                  {
+                    "type": 1,
+                    "string": "consentType"
+                  },
+                  {
+                    "type": 1,
+                    "string": "read"
+                  },
+                  {
+                    "type": 1,
+                    "string": "write"
+                  }
+                ],
+                "mapValue": [
+                  {
+                    "type": 1,
+                    "string": "analytics_storage"
+                  },
+                  {
+                    "type": 8,
+                    "boolean": false
+                  },
+                  {
+                    "type": 8,
+                    "boolean": true
+                  }
+                ]
+              },
+              {
+                "type": 3,
+                "mapKey": [
+                  {
+                    "type": 1,
+                    "string": "consentType"
+                  },
+                  {
+                    "type": 1,
+                    "string": "read"
+                  },
+                  {
+                    "type": 1,
+                    "string": "write"
+                  }
+                ],
+                "mapValue": [
+                  {
+                    "type": 1,
+                    "string": "ad_storage"
+                  },
+                  {
+                    "type": 8,
+                    "boolean": false
+                  },
+                  {
+                    "type": 8,
+                    "boolean": true
+                  }
+                ]
+              },
+              {
+                "type": 3,
+                "mapKey": [
+                  {
+                    "type": 1,
+                    "string": "consentType"
+                  },
+                  {
+                    "type": 1,
+                    "string": "read"
+                  },
+                  {
+                    "type": 1,
+                    "string": "write"
+                  }
+                ],
+                "mapValue": [
+                  {
+                    "type": 1,
+                    "string": "functionality_storage"
+                  },
+                  {
+                    "type": 8,
+                    "boolean": false
+                  },
+                  {
+                    "type": 8,
+                    "boolean": true
+                  }
+                ]
+              },
+              {
+                "type": 3,
+                "mapKey": [
+                  {
+                    "type": 1,
+                    "string": "consentType"
+                  },
+                  {
+                    "type": 1,
+                    "string": "read"
+                  },
+                  {
+                    "type": 1,
+                    "string": "write"
+                  }
+                ],
+                "mapValue": [
+                  {
+                    "type": 1,
+                    "string": "personalization_storage"
+                  },
+                  {
+                    "type": 8,
+                    "boolean": false
+                  },
+                  {
+                    "type": 8,
+                    "boolean": true
+                  }
+                ]
+              },
+              {
+                "type": 3,
+                "mapKey": [
+                  {
+                    "type": 1,
+                    "string": "consentType"
+                  },
+                  {
+                    "type": 1,
+                    "string": "read"
+                  },
+                  {
+                    "type": 1,
+                    "string": "write"
+                  }
+                ],
+                "mapValue": [
+                  {
+                    "type": 1,
+                    "string": "security_storage"
+                  },
+                  {
+                    "type": 8,
+                    "boolean": false
+                  },
+                  {
+                    "type": 8,
+                    "boolean": true
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "clientAnnotations": {
+      "isEditedByUser": true
+    },
+    "isRequired": true
   }
 ]
 
 
-___SANDBOXED_JS_FOR_WEB_TEMPLATE___
+___TESTS___
 
-const injectScript = require('injectScript');
-const encodeUriComponent = require('encodeUriComponent');
-const queryPermission = require('queryPermission');
-const cookiebotSerial = data.serial;
-const IABEnabled = data.iabFramework;
-const language = data.language;
-
-let scriptUrl = 'https://consent.cookiebot.com/uc.js?cbid=' + encodeUriComponent(cookiebotSerial);
-
-if (language === 'variable')
-{
-  scriptUrl += '&culture=' + encodeUriComponent(data.languageVariable);
-}
-
-if(IABEnabled)
-{
-  scriptUrl += '&framework=IAB';
-}
-
-if (queryPermission('inject_script', scriptUrl)) {
-  injectScript(scriptUrl, data.gtmOnSuccess, data.gtmOnFailure);
-} else {
-  data.gtmOnFailure();
-}
+scenarios: []
 
 
 ___NOTES___
 
-Created on 23.8.2019 08.53.59
+Created on 22.6.2021 08.53.59
+
+
