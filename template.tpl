@@ -155,6 +155,23 @@ ___TEMPLATE_PARAMETERS___
         "simpleValueType": true,
         "help": "Select default consent state for marketing cookies",
         "defaultValue": "denied"
+      },
+      {
+        "type": "TEXT",
+        "name": "waitForUpdate",
+        "displayName": "Wait for update",
+        "simpleValueType": true,
+        "valueUnit": "miliseconds",
+        "help": "Set how many miliseconds to wait before firing tags waiting for consent",
+        "defaultValue": 500,
+        "valueValidators": [
+          {
+            "type": "NON_EMPTY"
+          },
+          {
+            "type": "NON_NEGATIVE_NUMBER"
+          }
+        ]
       }
     ],
     "help": "Default measurement capabilities before the end user has consented."
@@ -189,7 +206,8 @@ setDefaultConsentState({
   'personalization_storage': data.defaultConsentPreferences,
   'analytics_storage': data.defaultConsentStatistics,
   'ad_storage': data.defaultConsentMarketing,
-  'security_storage': 'granted'
+  'security_storage': 'granted',
+  'wait_for_update': data.waitForUpdate
 });
 
 if (queryPermission('inject_script', scriptUrl)) {
@@ -394,6 +412,37 @@ ___WEB_PERMISSIONS___
                     "boolean": true
                   }
                 ]
+              },
+              {
+                "type": 3,
+                "mapKey": [
+                  {
+                    "type": 1,
+                    "string": "consentType"
+                  },
+                  {
+                    "type": 1,
+                    "string": "read"
+                  },
+                  {
+                    "type": 1,
+                    "string": "write"
+                  }
+                ],
+                "mapValue": [
+                  {
+                    "type": 1,
+                    "string": "wait_for_update"
+                  },
+                  {
+                    "type": 8,
+                    "boolean": false
+                  },
+                  {
+                    "type": 8,
+                    "boolean": true
+                  }
+                ]
               }
             ]
           }
@@ -414,7 +463,11 @@ scenarios: []
 
 
 ___NOTES___
+Cookiebot CMP Tag v2.1
+* Added support for wait_for_update flag
 
-Created on 22.6.2021 08.53.59
+Cookiebot CMP Tag v2.0
+* Implemented Google Consent Mode
 
-
+Cookiebot CMP Tag v1.0
+* Initial version
