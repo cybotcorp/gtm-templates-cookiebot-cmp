@@ -163,7 +163,7 @@ ___TEMPLATE_PARAMETERS___
         "simpleValueType": true,
         "valueUnit": "miliseconds",
         "help": "Set how many miliseconds to wait before firing tags waiting for consent",
-        "defaultValue": 500,
+        "defaultValue": 2000,
         "valueValidators": [
           {
             "type": "NON_EMPTY"
