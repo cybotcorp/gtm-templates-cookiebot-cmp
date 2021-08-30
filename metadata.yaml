@@ -1,6 +1,10 @@
 homepage: "www.cookiebot.com"
 documentation: "https://support.cookiebot.com/hc/en-us/articles/360003793854"
 versions:
+  # latest version
+  - sha: 622363c0398c30d84bb030e71b72e624e6031d4f
+    changeNotes: Added support for wait_for_update and set the default update wait to 2000ms
+  # previous versions
   - sha:  d76c9f4
     changeNotes: Support of standard consent types (ad_storage, analytics_storage, functionality_storage, personalization_storage, security_storage), Default Consent State and Additional Consent
   - sha:  e262384
