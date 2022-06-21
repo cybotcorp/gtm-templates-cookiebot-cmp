@@ -224,6 +224,7 @@ const urlPassthrough = data.urlPassthrough;
 const adsDataRedaction = data.adsDataRedaction;
 
 let scriptUrl = 'https://consent.cookiebot.com/uc.js?cbid=' + encodeUriComponent(cookiebotSerial);
+scriptUrl += '&consentmode-dataredaction=' + adsDataRedaction;
 
 if (language === 'variable')
 {
