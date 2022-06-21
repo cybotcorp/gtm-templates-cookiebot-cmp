@@ -157,6 +157,28 @@ ___TEMPLATE_PARAMETERS___
         "defaultValue": "denied"
       },
       {
+        "type": "SELECT",
+        "name": "adsDataRedaction",
+        "displayName": "Redact ads data",
+        "selectItems": [
+          {
+            "value": true,
+            "displayValue": "True"
+          },
+          {
+            "value": false,
+            "displayValue": "False"
+          },
+          {
+            "value": "dynamic",
+            "displayValue": "Dynamic (match ad_storage)"
+          }
+        ],
+        "simpleValueType": true,
+        "defaultValue": "dynamic",
+        "help": "When ad data redaction is true and marketing cookies are denied, ad click identifiers sent in network requests by Google Ads and Floodlight tags will be redacted. Network requests will also be sent through a cookieless domain"
+      },
+      {
         "type": "TEXT",
         "name": "waitForUpdate",
         "displayName": "Wait for update",
@@ -172,6 +194,13 @@ ___TEMPLATE_PARAMETERS___
             "type": "NON_NEGATIVE_NUMBER"
           }
         ]
+      },
+      {
+        "type": "CHECKBOX",
+        "name": "urlPassthrough",
+        "checkboxText": "Enable URL passthrough",
+        "simpleValueType": true,
+        "help": "When using URL passthrough, a few query parameters may be appended to links as users navigate through pages on your website"
       }
     ],
     "help": "Default measurement capabilities before the end user has consented."
@@ -184,10 +213,15 @@ ___SANDBOXED_JS_FOR_WEB_TEMPLATE___
 const injectScript = require('injectScript');
 const encodeUriComponent = require('encodeUriComponent');
 const queryPermission = require('queryPermission');
-const setDefaultConsentState =require('setDefaultConsentState');
+const gtagSet = require('gtagSet');
+const setDefaultConsentState = require('setDefaultConsentState');
+const getCookieValues = require('getCookieValues');
+const updateConsentState = require('updateConsentState');
 const cookiebotSerial = data.serial;
 const IABEnabled = data.iabFramework;
 const language = data.language;
+const urlPassthrough = data.urlPassthrough;
+const adsDataRedaction = data.adsDataRedaction;
 
 let scriptUrl = 'https://consent.cookiebot.com/uc.js?cbid=' + encodeUriComponent(cookiebotSerial);
 
@@ -208,6 +242,50 @@ setDefaultConsentState({
   'ad_storage': data.defaultConsentMarketing,
   'security_storage': 'granted',
   'wait_for_update': data.waitForUpdate
+});
+
+const consentString = getCookieValues("CookieConsent")[0];
+let consentObj = null;
+
+if ((typeof consentString !== 'undefined') && (consentString.indexOf("{") === 0) && (consentString.indexOf("}") > 0)) {
+  // turn consentString into json
+  consentObj = {
+    preferences: 'denied',
+    statistics: 'denied',
+    marketing: 'denied',
+    readConsentString : function (str) {
+      let tempA = str.replace('{', '').replace('}', '').split(","),
+        tempB = {};
+      for (let i=0; i<tempA.length; i+=1) {
+        let tempC = tempA[i].split(':');
+        tempB[tempC[0]] = tempC[1];
+      }
+      
+      consentObj.preferences = tempB.preferences === 'true' ? 'granted' : 'denied';
+      consentObj.statistics = tempB.statistics === 'true' ? 'granted' : 'denied';
+      consentObj.marketing = tempB.marketing === 'true' ? 'granted' : 'denied';
+    }
+  };
+  
+  consentObj.readConsentString(consentString);
+
+  updateConsentState({
+    'ad_storage': consentObj.marketing,
+    'analytics_storage': consentObj.statistics,
+    'functionality_storage': consentObj.preferences,
+    'personalization_storage': consentObj.preferences,
+    'security_storage': 'granted'
+  });
+}
+
+const marketingConsent = consentObj ? consentObj.marketing : data.defaultConsentMarketing;
+
+const marketingConsentBoolean = marketingConsent === "granted";
+const adsDataRedactionValue = adsDataRedaction === 'dynamic' || undefined ? !marketingConsentBoolean : adsDataRedaction === "true";
+
+gtagSet({
+  'url_passthrough': urlPassthrough === true,
+  'ads_data_redaction': adsDataRedactionValue
 });
 
 if (queryPermission('inject_script', scriptUrl)) {
@@ -453,6 +531,69 @@ ___WEB_PERMISSIONS___
       "isEditedByUser": true
     },
     "isRequired": true
+  },
+  {
+    "instance": {
+      "key": {
+        "publicId": "get_cookies",
+        "versionId": "1"
+      },
+      "param": [
+        {
+          "key": "cookieAccess",
+          "value": {
+            "type": 1,
+            "string": "specific"
+          }
+        },
+        {
+          "key": "cookieNames",
+          "value": {
+            "type": 2,
+            "listItem": [
+              {
+                "type": 1,
+                "string": "CookieConsent"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "clientAnnotations": {
+      "isEditedByUser": true
+    },
+    "isRequired": true
+  },
+  {
+    "instance": {
+      "key": {
+        "publicId": "write_data_layer",
+        "versionId": "1"
+      },
+      "param": [
+        {
+          "key": "keyPatterns",
+          "value": {
+            "type": 2,
+            "listItem": [
+              {
+                "type": 1,
+                "string": "ads_data_redaction"
+              },
+              {
+                "type": 1,
+                "string": "url_passthrough"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "clientAnnotations": {
+      "isEditedByUser": true
+    },
+    "isRequired": true
   }
 ]
 
@@ -463,6 +604,10 @@ scenarios: []
 
 
 ___NOTES___
+Cookiebot CMP Tag v2.2
+* Added support for ads_data_redaction and url_passthrough
+* Implement "updateConsentState" and gtagSet API
+
 Cookiebot CMP Tag v2.1
 * Added support for wait_for_update flag
 
