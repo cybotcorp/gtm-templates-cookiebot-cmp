@@ -719,7 +719,6 @@ Cookiebot CMP Tag v2.2
 * Added dropdown to control Ads Data Redaction
 * Added "UpdateConsentState" support in the template code
 * Changed Default Consent State to be region-based
-* Implemented changes to the template code to match feedback from Google
 
 Cookiebot CMP Tag v2.1
 * Added support for wait_for_update flag
