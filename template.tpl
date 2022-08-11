@@ -717,6 +717,7 @@ Cookiebot CMP Tag v2.2
 * Added checkbox to enable / disable Google Consent Mode
 * Added checkbox to enable / disable URL passthrough
 * Added dropdown to control Ads Data Redaction
+* Added "UpdateConsentState" support in the template code
 * Changed Default Consent State to be region-based
 * Implemented changes to the template code to match feedback from Google
 
