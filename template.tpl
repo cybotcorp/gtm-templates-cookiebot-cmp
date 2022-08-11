@@ -97,65 +97,20 @@ ___TEMPLATE_PARAMETERS___
     "type": "CHECKBOX"
   },
   {
+    "type": "CHECKBOX",
+    "name": "consentModeEnabled",
+    "checkboxText": "Enable Google Consent Mode",
+    "simpleValueType": true,
+    "defaultValue": true,
+    "help": "Enable Consent Mode if one or more of your tags rely on Google\u0027s consent API. Cookiebot will then automatically signal the user\u0027s consent to these tags.",
+    "alwaysInSummary": true
+  },
+  {
     "type": "GROUP",
-    "name": "Default Consent",
-    "displayName": "Default Consent State",
-    "groupStyle": "ZIPPY_OPEN_ON_PARAM",
+    "name": "ConsentModeSettings",
+    "displayName": "Consent Mode Settings",
+    "groupStyle": "NO_ZIPPY",
     "subParams": [
-      {
-        "type": "SELECT",
-        "name": "defaultConsentPreferences",
-        "displayName": "Preferences (consent types functionality_storage and personalization_storage)",
-        "selectItems": [
-          {
-            "value": "denied",
-            "displayValue": "Denied"
-          },
-          {
-            "value": "granted",
-            "displayValue": "Granted"
-          }
-        ],
-        "simpleValueType": true,
-        "help": "Select default consent state for preference cookies",
-        "defaultValue": "denied"
-      },
-      {
-        "type": "SELECT",
-        "name": "defaultConsentStatistics",
-        "displayName": "Statistics (consent type analytics_storage)",
-        "selectItems": [
-          {
-            "value": "denied",
-            "displayValue": "Denied"
-          },
-          {
-            "value": "granted",
-            "displayValue": "Granted"
-          }
-        ],
-        "simpleValueType": true,
-        "help": "Select default consent state for statistics cookies",
-        "defaultValue": "denied"
-      },
-      {
-        "type": "SELECT",
-        "name": "defaultConsentMarketing",
-        "displayName": "Marketing (consent type ad_storage)",
-        "selectItems": [
-          {
-            "value": "denied",
-            "displayValue": "Denied"
-          },
-          {
-            "value": "granted",
-            "displayValue": "Granted"
-          }
-        ],
-        "simpleValueType": true,
-        "help": "Select default consent state for marketing cookies",
-        "defaultValue": "denied"
-      },
       {
         "type": "TEXT",
         "name": "waitForUpdate",
@@ -172,9 +127,133 @@ ___TEMPLATE_PARAMETERS___
             "type": "NON_NEGATIVE_NUMBER"
           }
         ]
+      },
+      {
+        "type": "SELECT",
+        "name": "adsDataRedaction",
+        "displayName": "Redact ads data",
+        "selectItems": [
+          {
+            "value": true,
+            "displayValue": "True"
+          },
+          {
+            "value": false,
+            "displayValue": "False"
+          },
+          {
+            "value": "dynamic",
+            "displayValue": "Dynamic (match ad_storage)"
+          }
+        ],
+        "simpleValueType": true,
+        "defaultValue": "dynamic",
+        "help": "When ad data redaction is true and marketing cookies are denied, ad click identifiers sent in network requests by Google Ads and Floodlight tags will be redacted. Network requests will also be sent through a cookieless domain"
+      },
+      {
+        "type": "CHECKBOX",
+        "name": "urlPassthrough",
+        "checkboxText": "Enable URL passthrough",
+        "simpleValueType": true,
+        "help": "When using URL passthrough, a few query parameters may be appended to links as users navigate through pages on your website"
+      },
+      {
+        "type": "GROUP",
+        "name": "DefaultConsent",
+        "displayName": "Default Consent State",
+        "subParams": [
+          {
+            "type": "PARAM_TABLE",
+            "name": "regionSettings",
+            "paramTableColumns": [
+              {
+                "param": {
+                  "type": "TEXT",
+                  "name": "region",
+                  "displayName": "Region (leave blank to apply globally)",
+                  "simpleValueType": true
+                },
+                "isUnique": true
+              },
+              {
+                "param": {
+                  "type": "SELECT",
+                  "name": "defaultConsentPreferences",
+                  "displayName": "Preferences (functionality_storage and personalization_storage)",
+                  "selectItems": [
+                    {
+                      "value": "denied",
+                      "displayValue": "Denied"
+                    },
+                    {
+                      "value": "granted",
+                      "displayValue": "Granted"
+                    }
+                  ],
+                  "simpleValueType": true,
+                  "help": "Select default consent state for preference cookies",
+                  "defaultValue": "denied"
+                },
+                "isUnique": false
+              },
+              {
+                "param": {
+                  "type": "SELECT",
+                  "name": "defaultConsentStatistics",
+                  "displayName": "Statistics (analytics_storage)",
+                  "selectItems": [
+                    {
+                      "value": "denied",
+                      "displayValue": "Denied"
+                    },
+                    {
+                      "value": "granted",
+                      "displayValue": "Granted"
+                    }
+                  ],
+                  "simpleValueType": true,
+                  "defaultValue": "denied",
+                  "help": "Select default consent state for statistics cookies"
+                },
+                "isUnique": false
+              },
+              {
+                "param": {
+                  "type": "SELECT",
+                  "name": "defaultConsentMarketing",
+                  "displayName": "Marketing (ad_storage)",
+                  "selectItems": [
+                    {
+                      "value": "denied",
+                      "displayValue": "Denied"
+                    },
+                    {
+                      "value": "granted",
+                      "displayValue": "Granted"
+                    }
+                  ],
+                  "simpleValueType": true,
+                  "defaultValue": "denied",
+                  "help": "Select default consent state for marketing cookies"
+                },
+                "isUnique": false
+              }
+            ],
+            "editRowTitle": "Edit region",
+            "newRowButtonText": "Add region",
+            "newRowTitle": "Add region"
+          }
+        ],
+        "help": "A default consent state of \u0027denied\u0027 will apply until the user has submitted a consent. You can add different default states for users in different geographical regions. Please use ISO-3166-1 alpha-2 country codes for region values."
       }
     ],
-    "help": "Default measurement capabilities before the end user has consented."
+    "enablingConditions": [
+      {
+        "paramName": "consentModeEnabled",
+        "paramValue": true,
+        "type": "EQUALS"
+      }
+    ]
   }
 ]
 
@@ -184,12 +263,129 @@ ___SANDBOXED_JS_FOR_WEB_TEMPLATE___
 const injectScript = require('injectScript');
 const encodeUriComponent = require('encodeUriComponent');
 const queryPermission = require('queryPermission');
-const setDefaultConsentState =require('setDefaultConsentState');
+const gtagSet = require('gtagSet');
+const setDefaultConsentState = require('setDefaultConsentState');
+const getCookieValues = require('getCookieValues');
+const updateConsentState = require('updateConsentState');
 const cookiebotSerial = data.serial;
 const IABEnabled = data.iabFramework;
+const consentModeEnabled = data.consentModeEnabled;
 const language = data.language;
+const waitForUpdate = data.waitForUpdate;
+const urlPassthrough = data.urlPassthrough;
+const adsDataRedaction = data.adsDataRedaction;
+const regionSettings = data.regionSettings || [];
+let hasDefaultState = false;
+
+if (consentModeEnabled) {
+  
+    // Turn region string ("DK, NL, DE") into array (["DK", "NL", "DE"])
+    const getRegionArr = (regionStr) => {
+        return regionStr.split(',')
+            .map(region => region.trim())
+            .filter(region => region.length !== 0);
+    };
+
+    // Get default consent state per region
+    const getConsentRegionData = (regionObject) => {
+        const regionArr = getRegionArr(regionObject.region);
+      
+        return {
+            region: regionArr,
+            ad_storage: regionObject.defaultConsentMarketing,
+            analytics_storage: regionObject.defaultConsentStatistics,
+            functionality_storage: regionObject.defaultConsentPreferences,
+            personalization_storage: regionObject.defaultConsentPreferences,
+            security_storage: 'granted'
+        };
+    };
+  
+    // Set url_passthrough and developer ID
+    gtagSet({
+        'url_passthrough': urlPassthrough === true
+    });
+
+    // Set default consent for each region
+    regionSettings.forEach(regionObj => {
+        const consentRegionData = getConsentRegionData(regionObj);
+
+        if (waitForUpdate > 0) {
+            consentRegionData.wait_for_update = waitForUpdate;
+        }
+
+        setDefaultConsentState(consentRegionData);
+      
+        if (regionObj.region.trim() === '')
+        {
+          hasDefaultState = true;
+        }
+    });
+  
+    // Fallback to opt-out if no global default consent state has been defined in region settings
+    if(!hasDefaultState)
+    {
+      setDefaultConsentState({ad_storage: 'denied', analytics_storage: 'denied', functionality_storage: 'denied', personalization_storage: 'denied', security_storage: 'granted'});
+    }
+
+    // Read existing consent from consent cookie if it exists
+    let consentObj = null;
+    
+    if (getCookieValues("CookieConsent").toString() !== '') {
+        const consentString = getCookieValues("CookieConsent")[0];
+
+        if ((typeof consentString !== 'undefined') && (consentString.indexOf("{") === 0) && (consentString.indexOf("}") > 0)) {
+            // Turn consentString into object
+            consentObj = {
+                preferences: 'denied',
+                statistics: 'denied',
+                marketing: 'denied',
+                readConsentString: function (str) {
+                    let tempA = str.replace('{', '').replace('}', '').split(","),
+                        tempB = {};
+                    for (let i = 0; i < tempA.length; i += 1) {
+                        let tempC = tempA[i].split(':');
+                        tempB[tempC[0]] = tempC[1];
+                    }
+
+                    consentObj.preferences = tempB.preferences === 'true' ? 'granted' : 'denied';
+                    consentObj.statistics = tempB.statistics === 'true' ? 'granted' : 'denied';
+                    consentObj.marketing = tempB.marketing === 'true' ? 'granted' : 'denied';
+                    consentObj.region = tempB.region; // This is the region wherefrom the consent was originally submitted
+                }
+            };
+
+            consentObj.readConsentString(consentString);
+
+            updateConsentState({
+                'ad_storage': consentObj.marketing,
+                'analytics_storage': consentObj.statistics,
+                'functionality_storage': consentObj.preferences,
+                'personalization_storage': consentObj.preferences,
+                'security_storage': 'granted'
+            });
+        }
+    }
+    
+    // Set data redaction
+    const marketingConsent = consentObj ? consentObj.marketing : 'denied';
+    const marketingConsentBoolean = marketingConsent === 'granted';
+    const adsDataRedactionValue = adsDataRedaction === 'dynamic' || undefined ? !marketingConsentBoolean : adsDataRedaction === 'true';
+    
+    gtagSet({
+      'ads_data_redaction': adsDataRedactionValue
+    });
+}
 
 let scriptUrl = 'https://consent.cookiebot.com/uc.js?cbid=' + encodeUriComponent(cookiebotSerial);
+
+if(consentModeEnabled)
+{
+  scriptUrl += '&consentmode-dataredaction=' + adsDataRedaction;
+}
+else
+{
+  scriptUrl += '&consentmode=disabled';
+}
 
 if (language === 'variable')
 {
@@ -200,15 +396,6 @@ if(IABEnabled)
 {
   scriptUrl += '&framework=IAB';
 }
-
-setDefaultConsentState({
-  'functionality_storage': data.defaultConsentPreferences,
-  'personalization_storage': data.defaultConsentPreferences,
-  'analytics_storage': data.defaultConsentStatistics,
-  'ad_storage': data.defaultConsentMarketing,
-  'security_storage': 'granted',
-  'wait_for_update': data.waitForUpdate
-});
 
 if (queryPermission('inject_script', scriptUrl)) {
   injectScript(scriptUrl, data.gtmOnSuccess, data.gtmOnFailure);
@@ -453,6 +640,69 @@ ___WEB_PERMISSIONS___
       "isEditedByUser": true
     },
     "isRequired": true
+  },
+  {
+    "instance": {
+      "key": {
+        "publicId": "get_cookies",
+        "versionId": "1"
+      },
+      "param": [
+        {
+          "key": "cookieAccess",
+          "value": {
+            "type": 1,
+            "string": "specific"
+          }
+        },
+        {
+          "key": "cookieNames",
+          "value": {
+            "type": 2,
+            "listItem": [
+              {
+                "type": 1,
+                "string": "CookieConsent"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "clientAnnotations": {
+      "isEditedByUser": true
+    },
+    "isRequired": true
+  },
+  {
+    "instance": {
+      "key": {
+        "publicId": "write_data_layer",
+        "versionId": "1"
+      },
+      "param": [
+        {
+          "key": "keyPatterns",
+          "value": {
+            "type": 2,
+            "listItem": [
+              {
+                "type": 1,
+                "string": "ads_data_redaction"
+              },
+              {
+                "type": 1,
+                "string": "url_passthrough"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "clientAnnotations": {
+      "isEditedByUser": true
+    },
+    "isRequired": true
   }
 ]
 
@@ -463,6 +713,13 @@ scenarios: []
 
 
 ___NOTES___
+Cookiebot CMP Tag v2.2
+* Added checkbox to enable / disable Google Consent Mode
+* Added checkbox to enable / disable URL passthrough
+* Added dropdown to control Ads Data Redaction
+* Changed Default Consent State to be region-based
+* Implemented changes to the template code to match feedback from Google
+
 Cookiebot CMP Tag v2.1
 * Added support for wait_for_update flag
 
