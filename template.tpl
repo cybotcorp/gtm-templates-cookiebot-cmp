@@ -277,7 +277,7 @@ const adsDataRedaction = data.adsDataRedaction;
 const regionSettings = data.regionSettings || [];
 let hasDefaultState = false;
 
-if (consentModeEnabled) {
+if (consentModeEnabled !== false) {
   
     // Turn region string ("DK, NL, DE") into array (["DK", "NL", "DE"])
     const getRegionArr = (regionStr) => {
@@ -378,13 +378,13 @@ if (consentModeEnabled) {
 
 let scriptUrl = 'https://consent.cookiebot.com/uc.js?cbid=' + encodeUriComponent(cookiebotSerial);
 
-if(consentModeEnabled)
+if(consentModeEnabled === false)
 {
-  scriptUrl += '&consentmode-dataredaction=' + adsDataRedaction;
+  scriptUrl += '&consentmode=disabled';
 }
 else
 {
-  scriptUrl += '&consentmode=disabled';
+  scriptUrl += '&consentmode-dataredaction=' + adsDataRedaction;
 }
 
 if (language === 'variable')
@@ -713,6 +713,9 @@ scenarios: []
 
 
 ___NOTES___
+Cookiebot CMP Tag v2.2.1
+* Resolved ConsentModeEnabled default value issue
+
 Cookiebot CMP Tag v2.2
 * Added checkbox to enable / disable Google Consent Mode
 * Added checkbox to enable / disable URL passthrough
