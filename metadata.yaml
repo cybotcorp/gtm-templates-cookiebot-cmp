@@ -2,9 +2,11 @@ homepage: "www.cookiebot.com"
 documentation: "https://support.cookiebot.com/hc/en-us/articles/360003793854"
 versions:
   # latest version
+  - sha: 8acb5e9b5dd24c5220695415215f8a2926c5fc2d
+    changeNotes: Resolved ConsentModeEnabled default value issue
+  # previous versions
   - sha: 080486455946aaeb9de12be76f33e8358736db08
     changeNotes: Implemented new Google Consent Mode changes
-  # previous versions
   - sha: 622363c0398c30d84bb030e71b72e624e6031d4f
     changeNotes: Added support for wait_for_update and set the default update wait to 2000ms
   - sha:  d76c9f4
