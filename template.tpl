@@ -288,21 +288,27 @@ if (consentModeEnabled !== false) {
 
     // Get default consent state per region
     const getConsentRegionData = (regionObject) => {
-        const regionArr = getRegionArr(regionObject.region);
-      
-        return {
-            region: regionArr,
+        const consentRegionData = {
             ad_storage: regionObject.defaultConsentMarketing,
             analytics_storage: regionObject.defaultConsentStatistics,
             functionality_storage: regionObject.defaultConsentPreferences,
             personalization_storage: regionObject.defaultConsentPreferences,
             security_storage: 'granted'
         };
+      
+        const regionArr = getRegionArr(regionObject.region);
+      
+        if (regionArr.length) {
+          consentRegionData.region = regionArr;
+        }
+        
+        return consentRegionData;
     };
   
     // Set url_passthrough and developer ID
     gtagSet({
-        'url_passthrough': urlPassthrough === true
+      'url_passthrough': urlPassthrough === true,
+      'developer_id.dMWZhNz': true
     });
 
     // Set default consent for each region
@@ -315,7 +321,7 @@ if (consentModeEnabled !== false) {
 
         setDefaultConsentState(consentRegionData);
       
-        if (regionObj.region.trim() === '')
+        if (regionObj.region === undefined || regionObj.region.trim() === '')
         {
           hasDefaultState = true;
         }
@@ -693,6 +699,10 @@ ___WEB_PERMISSIONS___
               {
                 "type": 1,
                 "string": "url_passthrough"
+              },
+              {
+                "type": 1,
+                "string": "developer_id.dMWZhNz"
               }
             ]
           }
@@ -713,6 +723,10 @@ scenarios: []
 
 
 ___NOTES___
+Cookiebot CMP Tag v2.2.2
+* Added developer_id to template
+* Resolved default consent issue when using an empty region value
+
 Cookiebot CMP Tag v2.2.1
 * Resolved ConsentModeEnabled default value issue
 
