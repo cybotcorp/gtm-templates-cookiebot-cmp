@@ -2,9 +2,11 @@ homepage: "www.cookiebot.com"
 documentation: "https://support.cookiebot.com/hc/en-us/articles/360003793854"
 versions:
   # latest version
+  - sha: 4a70d3f6fe8e938fa39f87e687efaa43d19a1787
+  changeNotes: Resolved default consent issue for empty region values
+  # previous versions
   - sha: 8acb5e9b5dd24c5220695415215f8a2926c5fc2d
     changeNotes: Resolved ConsentModeEnabled default value issue
-  # previous versions
   - sha: 080486455946aaeb9de12be76f33e8358736db08
     changeNotes: Implemented new Google Consent Mode changes
   - sha: 622363c0398c30d84bb030e71b72e624e6031d4f
