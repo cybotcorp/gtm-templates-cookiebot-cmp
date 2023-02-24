@@ -378,8 +378,8 @@ if (consentModeEnabled !== false) {
   
     // Set url_passthrough and developer ID
     gtagSet({
-        'url_passthrough': urlPassthrough === true,
-        'developer_id.dMWZhNz': true
+      'url_passthrough': urlPassthrough === true,
+      'developer_id.dMWZhNz': true
     });
 
     // Set default consent for each region
