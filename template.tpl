@@ -802,6 +802,10 @@ ___NOTES___
 Cookiebot CMP Tag v2.3
 * Added support for multi-legislation configurations
 
+Cookiebot CMP Tag v2.2.2
+* Added developer_id to template
+* Resolved default consent issue when using an empty region valu
+
 Cookiebot CMP Tag v2.2.1
 * Resolved ConsentModeEnabled default value issue
 
