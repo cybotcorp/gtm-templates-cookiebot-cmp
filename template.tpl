@@ -804,7 +804,7 @@ Cookiebot CMP Tag v2.3
 
 Cookiebot CMP Tag v2.2.2
 * Added developer_id to template
-* Resolved default consent issue when using an empty region valu
+* Resolved default consent issue when using an empty region value
 
 Cookiebot CMP Tag v2.2.1
 * Resolved ConsentModeEnabled default value issue
