@@ -105,7 +105,6 @@ ___TEMPLATE_PARAMETERS___
       {
         "type": "SIMPLE_TABLE",
         "name": "geoRegions",
-        "displayName": "",
         "simpleTableColumns": [
           {
             "defaultValue": "",
@@ -120,7 +119,8 @@ ___TEMPLATE_PARAMETERS___
                 ],
                 "errorMessage": "Must be a region ISO code, for example: \"us-06\" or \"gb\""
               }
-            ]
+            ],
+            "valueHint": "DE, DK, AT, US-06"
           },
           {
             "defaultValue": "",
@@ -135,10 +135,10 @@ ___TEMPLATE_PARAMETERS___
                 ],
                 "errorMessage": "Must resemble \"01234567-89ab-cdef-0123-456789abcdef\""
               }
-            ]
+            ],
+            "valueHint": "Your Cookiebot Domain Group ID"
           }
-        ],
-        "valueValidators": []
+        ]
       }
     ],
     "enablingConditions": [
