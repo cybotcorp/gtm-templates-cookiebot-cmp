@@ -115,7 +115,7 @@ ___TEMPLATE_PARAMETERS___
               {
                 "type": "REGEX",
                 "args": [
-                  "^[a-zA-Z]{2}(-([a-zA-Z0-9]){2})?$"
+                  "^[a-zA-Z]{2}(-[a-zA-Z0-9]{2,4})?$"
                 ],
                 "errorMessage": "Must be a region ISO code, for example: \"us-06\" or \"gb\""
               }
