@@ -90,6 +90,27 @@ ___TEMPLATE_PARAMETERS___
     "type": "TEXT"
   },
   {
+    "type": "SELECT",
+    "name": "iabFramework",
+    "displayName": "IAB Transparency and Consent Framework",
+    "selectItems": [
+      {
+        "value": "",
+        "displayValue": "Disabled"
+      },
+      {
+        "value": "IAB",
+        "displayValue": "Enable IAB TCF v2.0"
+      },
+      {
+        "value": "TCFv2.2",
+        "displayValue": "Enable IAB TCF v2.2"
+      }
+    ],
+    "simpleValueType": true,
+    "help": "Enable IAB Europe\u0027s Transparency \u0026 Consent Framework if your site is displaying ads from one or more IAB Vendors."
+  },
+  {
     "type": "CHECKBOX",
     "name": "addGeoRegion",
     "checkboxText": "Add Geo Region(s)",
@@ -148,13 +169,6 @@ ___TEMPLATE_PARAMETERS___
         "type": "EQUALS"
       }
     ]
-  },
-  {
-    "help": "Enabled IAB Europe\u0027s Transparency \u0026 Consent Framework if your site is displaying ads from one or more IAB Vendors.",
-    "simpleValueType": true,
-    "name": "iabFramework",
-    "checkboxText": "Enable IAB Transparency and Consent Framework",
-    "type": "CHECKBOX"
   },
   {
     "type": "CHECKBOX",
@@ -328,7 +342,7 @@ const setDefaultConsentState = require('setDefaultConsentState');
 const getCookieValues = require('getCookieValues');
 const updateConsentState = require('updateConsentState');
 const cookiebotSerial = data.serial;
-const IABEnabled = data.iabFramework;
+const IABFramework = data.iabFramework;
 const consentModeEnabled = data.consentModeEnabled;
 const language = data.language;
 const waitForUpdate = data.waitForUpdate;
@@ -474,7 +488,11 @@ if (geoRegionsString != "") {
   scriptUrl += '&georegions=' + encodeUriComponent(geoRegionsString); 
 }
 
-if(IABEnabled)
+if(IABFramework === "TCFv2.2")
+{
+  scriptUrl += '&framework=TCFv2.2';
+}
+else if (IABFramework)
 {
   scriptUrl += '&framework=IAB';
 }
@@ -799,6 +817,10 @@ scenarios: []
 
 
 ___NOTES___
+
+Cookiebot CMP Tag v2.4
+* Added support for TCFv2.2
+
 Cookiebot CMP Tag v2.3
 * Added support for multi-legislation configurations
 
