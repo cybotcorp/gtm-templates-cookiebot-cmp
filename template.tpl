@@ -90,6 +90,66 @@ ___TEMPLATE_PARAMETERS___
     "type": "TEXT"
   },
   {
+    "type": "CHECKBOX",
+    "name": "addGeoRegion",
+    "checkboxText": "Add Geo Region(s)",
+    "simpleValueType": true,
+    "help": "Add regions where a different banner than the default should be displayed."
+  },
+  {
+    "type": "GROUP",
+    "name": "Geo Region",
+    "displayName": "Geo Regions",
+    "groupStyle": "NO_ZIPPY",
+    "subParams": [
+      {
+        "type": "SIMPLE_TABLE",
+        "name": "geoRegions",
+        "simpleTableColumns": [
+          {
+            "defaultValue": "",
+            "displayName": "Region",
+            "name": "altRegion",
+            "type": "TEXT",
+            "valueValidators": [
+              {
+                "type": "REGEX",
+                "args": [
+                  "^([a-zA-Z]{2}(-[0-9]{2})?(, ?)?)+$"
+                ],
+                "errorMessage": "Must be a region ISO code, for example: \"us-06\" or \"gb\""
+              }
+            ],
+            "valueHint": "DE, DK, AT, US-06"
+          },
+          {
+            "defaultValue": "",
+            "displayName": "Domain Group ID",
+            "name": "altCbid",
+            "type": "TEXT",
+            "valueValidators": [
+              {
+                "type": "REGEX",
+                "args": [
+                  "^[\\dA-Fa-f]{8}(-[\\dA-Fa-f]{4}){3}-[\\dA-Fa-f]{12}$"
+                ],
+                "errorMessage": "Must resemble \"01234567-89ab-cdef-0123-456789abcdef\""
+              }
+            ],
+            "valueHint": "Your Cookiebot Domain Group ID"
+          }
+        ]
+      }
+    ],
+    "enablingConditions": [
+      {
+        "paramName": "addGeoRegion",
+        "paramValue": true,
+        "type": "EQUALS"
+      }
+    ]
+  },
+  {
     "help": "Enabled IAB Europe\u0027s Transparency \u0026 Consent Framework if your site is displaying ads from one or more IAB Vendors.",
     "simpleValueType": true,
     "name": "iabFramework",
@@ -275,7 +335,18 @@ const waitForUpdate = data.waitForUpdate;
 const urlPassthrough = data.urlPassthrough;
 const adsDataRedaction = data.adsDataRedaction;
 const regionSettings = data.regionSettings || [];
+const geoRegions = data.geoRegions || [];
 let hasDefaultState = false;
+
+// Adding alternate banners for specified georegions
+let geoRegionsString = "";
+geoRegions.forEach(regionObj => {
+  if (geoRegionsString != "") {
+    geoRegionsString += ",";
+  }
+  
+  geoRegionsString += "{'region':'" + regionObj.altRegion + "','cbid':'" + regionObj.altCbid + "'}";
+});
 
 if (consentModeEnabled !== false) {
   
@@ -396,6 +467,11 @@ else
 if (language === 'variable')
 {
   scriptUrl += '&culture=' + encodeUriComponent(data.languageVariable);
+}
+
+// Add georegions to the script src
+if (geoRegionsString != "") {
+  scriptUrl += '&georegions=' + encodeUriComponent(geoRegionsString); 
 }
 
 if(IABEnabled)
@@ -723,6 +799,9 @@ scenarios: []
 
 
 ___NOTES___
+Cookiebot CMP Tag v2.3
+* Added support for multi-legislation configurations
+
 Cookiebot CMP Tag v2.2.2
 * Added developer_id to template
 * Resolved default consent issue when using an empty region value
