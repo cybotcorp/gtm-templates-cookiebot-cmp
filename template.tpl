@@ -169,7 +169,7 @@ ___TEMPLATE_PARAMETERS___
         "name": "iabFramework",
         "checkboxText": "Enable IAB Transparency and Consent Framework",
         "simpleValueType": true,
-        "help": "Enabled IAB Europe\u0027s Transparency \u0026 Consent Framework if your site is displaying ads from one or more IAB Vendors."
+        "help": "Enable IAB Europe\u0027s Transparency \u0026 Consent Framework if your site is displaying ads from one or more IAB Vendors."
       },
       {
         "type": "SELECT",
