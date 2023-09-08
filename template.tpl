@@ -487,7 +487,7 @@ if (consentModeEnabled !== false) {
     });
 }
 
-let scriptUrl = 'https://consent.cookiebot.com/uc.js?cbid=' + encodeUriComponent(cookiebotSerial);
+let scriptUrl = 'https://consent.cookiebot.com/uc.js?cbid=' + encodeUriComponent(cookiebotSerial) + '&implementation=gtm';
 
 if(consentModeEnabled === false)
 {
@@ -837,6 +837,9 @@ scenarios: []
 
 
 ___NOTES___
+Cookiebot CMP Tag v2.5
+* Added implementation URL-parameter
+
 Cookiebot CMP Tag v2.4
 * Added support for TCFv2.2
 
