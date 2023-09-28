@@ -367,7 +367,7 @@ const consentModeEnabled = data.consentModeEnabled;
 const language = data.language;
 const waitForUpdate = data.waitForUpdate;
 const urlPassthrough = data.urlPassthrough;
-const adsDataRedaction = data.adsDataRedaction;
+const adsDataRedaction = data.adsDataRedaction || 'dynamic';
 const regionSettings = data.regionSettings || [];
 const geoRegions = data.geoRegions || [];
 let hasDefaultState = false;
@@ -480,7 +480,7 @@ if (consentModeEnabled !== false) {
     // Set data redaction
     const marketingConsent = consentObj ? consentObj.marketing : 'denied';
     const marketingConsentBoolean = marketingConsent === 'granted';
-    const adsDataRedactionValue = adsDataRedaction === 'dynamic' || undefined ? !marketingConsentBoolean : adsDataRedaction === 'true';
+    const adsDataRedactionValue = adsDataRedaction === 'dynamic' ? !marketingConsentBoolean : adsDataRedaction === 'true';
     
     gtagSet({
       'ads_data_redaction': adsDataRedactionValue
@@ -837,6 +837,9 @@ scenarios: []
 
 
 ___NOTES___
+Cookiebot CMP Tag v2.5.1
+* Resolved edge case issue where consentmode-dataredaction parameter is set as undefined
+
 Cookiebot CMP Tag v2.5
 * Added implementation URL-parameter
 
