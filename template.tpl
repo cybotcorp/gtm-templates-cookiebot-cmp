@@ -395,6 +395,8 @@ if (consentModeEnabled !== false) {
     const getConsentRegionData = (regionObject) => {
         const consentRegionData = {
             ad_storage: regionObject.defaultConsentMarketing,
+            ad_user_data: regionObject.defaultConsentMarketing,
+            ad_personalization: regionObject.defaultConsentMarketing,
             analytics_storage: regionObject.defaultConsentStatistics,
             functionality_storage: regionObject.defaultConsentPreferences,
             personalization_storage: regionObject.defaultConsentPreferences,
@@ -433,9 +435,16 @@ if (consentModeEnabled !== false) {
     });
   
     // Fallback to opt-out if no global default consent state has been defined in region settings
-    if(!hasDefaultState)
-    {
-      setDefaultConsentState({ad_storage: 'denied', analytics_storage: 'denied', functionality_storage: 'denied', personalization_storage: 'denied', security_storage: 'granted'});
+    if(!hasDefaultState) {
+      setDefaultConsentState({
+        ad_storage: 'denied',
+        ad_user_data: 'denied',
+        ad_personalization: 'denied',
+        analytics_storage: 'denied',
+        functionality_storage: 'denied',
+        personalization_storage: 'denied',
+        security_storage: 'granted'
+      });
     }
 
     // Read existing consent from consent cookie if it exists
@@ -469,6 +478,8 @@ if (consentModeEnabled !== false) {
 
             updateConsentState({
                 'ad_storage': consentObj.marketing,
+                'ad_user_data': consentObj.marketing,
+                'ad_personalization': consentObj.marketing,
                 'analytics_storage': consentObj.statistics,
                 'functionality_storage': consentObj.preferences,
                 'personalization_storage': consentObj.preferences,
@@ -750,6 +761,68 @@ ___WEB_PERMISSIONS___
                     "boolean": true
                   }
                 ]
+              },
+              {
+                "type": 3,
+                "mapKey": [
+                  {
+                    "type": 1,
+                    "string": "consentType"
+                  },
+                  {
+                    "type": 1,
+                    "string": "read"
+                  },
+                  {
+                    "type": 1,
+                    "string": "write"
+                  }
+                ],
+                "mapValue": [
+                  {
+                    "type": 1,
+                    "string": "ad_personalization"
+                  },
+                  {
+                    "type": 8,
+                    "boolean": false
+                  },
+                  {
+                    "type": 8,
+                    "boolean": true
+                  }
+                ]
+              },
+              {
+                "type": 3,
+                "mapKey": [
+                  {
+                    "type": 1,
+                    "string": "consentType"
+                  },
+                  {
+                    "type": 1,
+                    "string": "read"
+                  },
+                  {
+                    "type": 1,
+                    "string": "write"
+                  }
+                ],
+                "mapValue": [
+                  {
+                    "type": 1,
+                    "string": "ad_user_data"
+                  },
+                  {
+                    "type": 8,
+                    "boolean": false
+                  },
+                  {
+                    "type": 8,
+                    "boolean": true
+                  }
+                ]
               }
             ]
           }
@@ -837,6 +910,9 @@ scenarios: []
 
 
 ___NOTES___
+Cookiebot CMP Tag v2.6
+* Add support for ad_user_data and ad_personalization GCM signals
+
 Cookiebot CMP Tag v2.5.1
 * Resolved edge case issue where consentmode-dataredaction parameter is set as undefined
 
