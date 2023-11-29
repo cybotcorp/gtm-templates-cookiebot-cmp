@@ -2,9 +2,11 @@ homepage: "www.cookiebot.com"
 documentation: "https://support.cookiebot.com/hc/en-us/articles/360003793854"
 versions:
   # latest version
+  - sha: 020bcc69ccdeae78aa8c184abd71f16cff86ca26
+    changeNotes: Added support for DMA
+  # previous versions
   - sha: f47bd0d49f7d9aee5ebd31a37404eb12b88805e5
     changeNotes: Added support for multi-legislation and TCFv2.2
-  # previous versions
   - sha: 4a70d3f6fe8e938fa39f87e687efaa43d19a1787
     changeNotes: Resolved default consent issue for empty region values
   - sha: 8acb5e9b5dd24c5220695415215f8a2926c5fc2d
