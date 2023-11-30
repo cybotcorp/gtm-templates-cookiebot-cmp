@@ -2,7 +2,7 @@ homepage: "www.cookiebot.com"
 documentation: "https://support.cookiebot.com/hc/en-us/articles/360003793854"
 versions:
   # latest version
-  - sha: 020bcc69ccdeae78aa8c184abd71f16cff86ca26
+  - sha: 498a152a9ef18d2567909c116405dfbf03ecfc87
     changeNotes: Added support for Consent Mode v2
   # previous versions
   - sha: f47bd0d49f7d9aee5ebd31a37404eb12b88805e5
