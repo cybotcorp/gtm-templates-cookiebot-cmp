@@ -3,7 +3,7 @@ documentation: "https://support.cookiebot.com/hc/en-us/articles/360003793854"
 versions:
   # latest version
   - sha: 020bcc69ccdeae78aa8c184abd71f16cff86ca26
-    changeNotes: Added support for DMA
+    changeNotes: Added support for Consent Mode v2
   # previous versions
   - sha: f47bd0d49f7d9aee5ebd31a37404eb12b88805e5
     changeNotes: Added support for multi-legislation and TCFv2.2
