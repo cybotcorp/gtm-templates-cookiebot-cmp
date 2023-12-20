@@ -159,44 +159,11 @@ ___TEMPLATE_PARAMETERS___
     "alwaysInSummary": true
   },
   {
-    "type": "GROUP",
-    "name": "TcfSettings",
-    "displayName": "TCF Framework",
-    "groupStyle": "ZIPPY_CLOSED",
-    "subParams": [
-      {
-        "type": "CHECKBOX",
-        "name": "iabFramework",
-        "checkboxText": "Enable IAB Transparency and Consent Framework",
-        "simpleValueType": true,
-        "help": "Enable IAB Europe\u0027s Transparency \u0026 Consent Framework if your site is displaying ads from one or more IAB Vendors."
-      },
-      {
-        "type": "SELECT",
-        "name": "tcfVersion",
-        "displayName": "TCF Version",
-        "macrosInSelect": false,
-        "selectItems": [
-          {
-            "value": "IAB",
-            "displayValue": "TCF 2.0"
-          },
-          {
-            "value": "TCFv2.2",
-            "displayValue": "TCF 2.2"
-          }
-        ],
-        "simpleValueType": true,
-        "defaultValue": "IAB",
-        "enablingConditions": [
-          {
-            "paramName": "iabFramework",
-            "paramValue": true,
-            "type": "EQUALS"
-          }
-        ]
-      }
-    ]
+    "type": "CHECKBOX",
+    "name": "iabFramework",
+    "checkboxText": "Enable IAB Transparency and Consent Framework",
+    "simpleValueType": true,
+    "help": "Enable IAB Europe\u0027s Transparency \u0026 Consent Framework if your site is displaying ads from one or more IAB Vendors."
   },
   {
     "type": "GROUP",
@@ -362,7 +329,6 @@ const getCookieValues = require('getCookieValues');
 const updateConsentState = require('updateConsentState');
 const cookiebotSerial = data.serial;
 const IABEnabled = data.iabFramework;
-const TCFVersion = data.tcfVersion;
 const consentModeEnabled = data.consentModeEnabled;
 const language = data.language;
 const waitForUpdate = data.waitForUpdate;
@@ -519,13 +485,8 @@ if (geoRegionsString != "") {
   scriptUrl += '&georegions=' + encodeUriComponent(geoRegionsString); 
 }
 
-if(IABEnabled)
-{
-  if (TCFVersion === "TCFv2.2") {
-    scriptUrl += '&framework=TCFv2.2';
-  } else {
-    scriptUrl += '&framework=IAB';
-  } 
+if(IABEnabled) {
+  scriptUrl += '&framework=TCFv2.2';
 }
 
 if (queryPermission('inject_script', scriptUrl)) {
@@ -910,6 +871,9 @@ scenarios: []
 
 
 ___NOTES___
+Cookiebot CMP Tag v2.7
+* Remove deprecated "TCFv2.0" dropdown option
+
 Cookiebot CMP Tag v2.6
 * Add support for ad_user_data and ad_personalization GCM signals
 
