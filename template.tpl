@@ -281,7 +281,7 @@ ___TEMPLATE_PARAMETERS___
                 "param": {
                   "type": "SELECT",
                   "name": "defaultConsentMarketing",
-                  "displayName": "Marketing (ad_storage)",
+                  "displayName": "Marketing (ad_storage, ad_user_data and ad_personalization)",
                   "selectItems": [
                     {
                       "value": "denied",
@@ -871,6 +871,9 @@ scenarios: []
 
 
 ___NOTES___
+Cookiebot CMP Tag v2.7.1
+* Add missing mention of new bits
+
 Cookiebot CMP Tag v2.7
 * Remove deprecated "TCFv2.0" dropdown option
 
