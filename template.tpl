@@ -281,7 +281,7 @@ ___TEMPLATE_PARAMETERS___
                 "param": {
                   "type": "SELECT",
                   "name": "defaultConsentMarketing",
-                  "displayName": "Marketing (ad_storage, ad_user_data and ad_personalization)",
+                  "displayName": "Marketing (ad_storage)",
                   "selectItems": [
                     {
                       "value": "denied",
@@ -295,6 +295,48 @@ ___TEMPLATE_PARAMETERS___
                   "simpleValueType": true,
                   "defaultValue": "denied",
                   "help": "Select default consent state for marketing cookies"
+                },
+                "isUnique": false
+              },
+              {
+                "param": {
+                  "type": "SELECT",
+                  "name": "defaultConsentMarketingAdUserData",
+                  "displayName": "Marketing (ad_user_data)",
+                  "selectItems": [
+                    {
+                      "value": "denied",
+                      "displayValue": "Denied"
+                    },
+                    {
+                      "value": "granted",
+                      "displayValue": "Granted"
+                    }
+                  ],
+                  "simpleValueType": true,
+                  "help": "Select default consent state for marketing cookies",
+                  "defaultValue": "denied"
+                },
+                "isUnique": false
+              },
+              {
+                "param": {
+                  "type": "SELECT",
+                  "name": "defaultConsentMarketingAdPersonalization",
+                  "displayName": "Marketing (ad_personalization)",
+                  "selectItems": [
+                    {
+                      "value": "denied",
+                      "displayValue": "Denied"
+                    },
+                    {
+                      "value": "granted",
+                      "displayValue": "Granted"
+                    }
+                  ],
+                  "simpleValueType": true,
+                  "help": "Select default consent state for marketing cookies",
+                  "defaultValue": "denied"
                 },
                 "isUnique": false
               }
@@ -361,8 +403,8 @@ if (consentModeEnabled !== false) {
     const getConsentRegionData = (regionObject) => {
         const consentRegionData = {
             ad_storage: regionObject.defaultConsentMarketing,
-            ad_user_data: regionObject.defaultConsentMarketing,
-            ad_personalization: regionObject.defaultConsentMarketing,
+            ad_user_data: regionObject.defaultConsentMarketingAdUserData,
+            ad_personalization: regionObject.defaultConsentMarketingAdPersonalization,
             analytics_storage: regionObject.defaultConsentStatistics,
             functionality_storage: regionObject.defaultConsentPreferences,
             personalization_storage: regionObject.defaultConsentPreferences,
@@ -871,6 +913,9 @@ scenarios: []
 
 
 ___NOTES___
+Cookiebot CMP Tag v2.8
+* Add separate choices (dropdowns) for new Marketing bits
+
 Cookiebot CMP Tag v2.7.1
 * Add missing mention of new bits
 
