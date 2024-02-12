@@ -985,5 +985,3 @@ Cookiebot CMP Tag v2.0
 
 Cookiebot CMP Tag v1.0
 * Initial version
-
-
