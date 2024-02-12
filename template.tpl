@@ -524,7 +524,6 @@ if (consentModeEnabled !== false) {
     });
 }
 
-
 let scriptUrl = 'https://consent.cookiebot.' + cdnRegion + '/uc.js?cbid=' + encodeUriComponent(cookiebotSerial) + '&implementation=gtm';
 
 if(consentModeEnabled === false)
