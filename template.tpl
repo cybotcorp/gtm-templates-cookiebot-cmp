@@ -1,4 +1,4 @@
-___TERMS_OF_SERVICE___
+﻿___TERMS_OF_SERVICE___
 
 By creating or modifying this file you agree to Google Tag Manager's Community
 Template Gallery Developer Terms of Service available at
@@ -164,6 +164,23 @@ ___TEMPLATE_PARAMETERS___
     "checkboxText": "Enable IAB Transparency and Consent Framework",
     "simpleValueType": true,
     "help": "Enable IAB Europe\u0027s Transparency \u0026 Consent Framework if your site is displaying ads from one or more IAB Vendors."
+  },
+  {
+    "type": "SELECT",
+    "name": "cdnRegion",
+    "displayName": "CDN Region",
+    "selectItems": [
+      {
+        "value": "com",
+        "displayValue": ".com"
+      },
+      {
+        "value": "eu",
+        "displayValue": ".eu"
+      }
+    ],
+    "simpleValueType": true,
+    "defaultValue": "com"
   },
   {
     "type": "GROUP",
@@ -378,6 +395,7 @@ const urlPassthrough = data.urlPassthrough;
 const adsDataRedaction = data.adsDataRedaction || 'dynamic';
 const regionSettings = data.regionSettings || [];
 const geoRegions = data.geoRegions || [];
+const cdnRegion = data.cdnRegion || 'com';
 let hasDefaultState = false;
 
 // Adding alternate banners for specified georegions
@@ -506,7 +524,7 @@ if (consentModeEnabled !== false) {
     });
 }
 
-let scriptUrl = 'https://consent.cookiebot.com/uc.js?cbid=' + encodeUriComponent(cookiebotSerial) + '&implementation=gtm';
+let scriptUrl = 'https://consent.cookiebot.' + cdnRegion + '/uc.js?cbid=' + encodeUriComponent(cookiebotSerial) + '&implementation=gtm';
 
 if(consentModeEnabled === false)
 {
@@ -556,6 +574,10 @@ ___WEB_PERMISSIONS___
               {
                 "type": 1,
                 "string": "https://*.cookiebot.com/"
+              },
+              {
+                "type": 1,
+                "string": "https://*.cookiebot.eu/"
               }
             ]
           }
@@ -913,6 +935,10 @@ scenarios: []
 
 
 ___NOTES___
+
+Cookiebot CMP Tag v2.9
+* Add support for selction of the CDN region
+
 Cookiebot CMP Tag v2.8
 * Add separate choices (dropdowns) for new Marketing bits
 
