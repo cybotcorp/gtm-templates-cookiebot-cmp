@@ -71,6 +71,25 @@ ___TEMPLATE_PARAMETERS___
     "type": "SELECT"
   },
   {
+    "type": "SELECT",
+    "name": "cdnRegion",
+    "displayName": "CDN Region",
+    "macrosInSelect": false,
+    "selectItems": [
+      {
+        "value": "com",
+        "displayValue": ".com"
+      },
+      {
+        "value": "eu",
+        "displayValue": ".eu"
+      }
+    ],
+    "simpleValueType": true,
+    "help": "Select which CDN region Cookiebot uses",
+    "defaultValue": "com"
+  },
+  {
     "help": "Select a variable that returns a two-letter ISO 639-1 language code, e.g. from current URL. In Cookiebot, create matching content versions for all languages supported on your site.",
     "enablingConditions": [
       {
@@ -378,6 +397,7 @@ const urlPassthrough = data.urlPassthrough;
 const adsDataRedaction = data.adsDataRedaction || 'dynamic';
 const regionSettings = data.regionSettings || [];
 const geoRegions = data.geoRegions || [];
+const cdnRegion = data.cdnRegion || 'com';
 let hasDefaultState = false;
 
 // Adding alternate banners for specified georegions
@@ -506,7 +526,7 @@ if (consentModeEnabled !== false) {
     });
 }
 
-let scriptUrl = 'https://consent.cookiebot.com/uc.js?cbid=' + encodeUriComponent(cookiebotSerial) + '&implementation=gtm';
+let scriptUrl = 'https://consent.cookiebot.' + cdnRegion + '/uc.js?cbid=' + encodeUriComponent(cookiebotSerial) + '&implementation=gtm';
 
 if(consentModeEnabled === false)
 {
@@ -556,6 +576,10 @@ ___WEB_PERMISSIONS___
               {
                 "type": 1,
                 "string": "https://*.cookiebot.com/"
+              },
+              {
+                "type": 1,
+                "string": "https://*.cookiebot.eu/"
               }
             ]
           }
@@ -913,6 +937,9 @@ scenarios: []
 
 
 ___NOTES___
+Cookiebot CMP Tag v2.9
+* Add option to use .eu CDN region
+
 Cookiebot CMP Tag v2.8
 * Add separate choices (dropdowns) for new Marketing bits
 
