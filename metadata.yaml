@@ -2,9 +2,11 @@ homepage: "www.cookiebot.com"
 documentation: "https://support.cookiebot.com/hc/en-us/articles/360003793854"
 versions:
   # latest version
+  - sha: ce0befa78814d59c9905b48a9026503963020573
+    changeNotes: Add support for .eu CDN region
+  # previous versions
   - sha: d83fb46e86219acace75b48bfac52f560eb4c71a
     changeNotes: Remove deprecated TCFv2.0 option, add separate options for Marketing bits
-  # previous versions
   - sha: 498a152a9ef18d2567909c116405dfbf03ecfc87
     changeNotes: Added support for Consent Mode v2
   - sha: f47bd0d49f7d9aee5ebd31a37404eb12b88805e5
