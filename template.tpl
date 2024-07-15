@@ -237,6 +237,21 @@ ___TEMPLATE_PARAMETERS___
         "help": "When using URL passthrough, a few query parameters may be appended to links as users navigate through pages on your website"
       },
       {
+        "type": "CHECKBOX",
+        "name": "advertiserConsentModeEnabled",
+        "checkboxText": "Advertiser Consent Mode",
+        "simpleValueType": true,
+        "help": "If enabled, Google will deduce ad_storage, ad_user_data and ad_personalization data from the TC string.",
+        "defaultValue": true,
+        "enablingConditions": [
+          {
+            "paramName": "consentModeEnabled",
+            "paramValue": true,
+            "type": "EQUALS"
+          }
+        ]
+      },
+      {
         "type": "GROUP",
         "name": "DefaultConsent",
         "displayName": "Default Consent State",
@@ -399,6 +414,12 @@ const regionSettings = data.regionSettings || [];
 const geoRegions = data.geoRegions || [];
 const cdnRegion = data.cdnRegion || 'com';
 let hasDefaultState = false;
+let advertiserConsentModeEnabled = data.advertiserConsentModeEnabled;
+
+// Fallback: existing templates that receives new fields might default to "undefined", even though a default value is set
+if (consentModeEnabled && advertiserConsentModeEnabled === undefined) {
+  advertiserConsentModeEnabled = true; // set to true (default) if checkbox is shown and has undefined value
+}
 
 // Adding alternate banners for specified georegions
 let geoRegionsString = "";
@@ -531,6 +552,9 @@ let scriptUrl = 'https://consent.cookiebot.' + cdnRegion + '/uc.js?cbid=' + enco
 if(consentModeEnabled === false)
 {
   scriptUrl += '&consentmode=disabled';
+}
+if (consentModeEnabled === false || advertiserConsentModeEnabled === false) {
+  scriptUrl += '&advertiserConsentMode=disabled';
 }
 else
 {
@@ -937,6 +961,9 @@ scenarios: []
 
 
 ___NOTES___
+Cookiebot CMP Tag v2.10
+* Add option to disable Advertiser Consent Mode when GCM is enabled
+
 Cookiebot CMP Tag v2.9
 * Add option to use .eu CDN region
 
