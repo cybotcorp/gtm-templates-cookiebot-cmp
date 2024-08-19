@@ -2,9 +2,11 @@ homepage: "www.cookiebot.com"
 documentation: "https://support.cookiebot.com/hc/en-us/articles/360003793854"
 versions:
   # latest version
+  - sha: e4d77478e09db124f9a83e99109888bc3d96f8a7
+    changeNotes: Updated GTM template vendor details
+  # previous versions
   - sha: 8d7a17a527d618638df63b20913114813a8c61b2
     changeNotes: Added GTM template vendor details
-  # previous versions
   - sha: 6ed70ee26f0b8e501c735997292df01d43d3d36e
     changeNotes: Add support for disabling Advertiser Consent Mode
   - sha: ce0befa78814d59c9905b48a9026503963020573
