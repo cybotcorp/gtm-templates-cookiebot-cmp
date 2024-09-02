@@ -2,9 +2,11 @@ homepage: "www.cookiebot.com"
 documentation: "https://support.cookiebot.com/hc/en-us/articles/360003793854"
 versions:
   # latest version
-  - sha: e4d77478e09db124f9a83e99109888bc3d96f8a7
+  - sha: 98fac7c143ca53f8faebe6c48aa66a907575eb65
     changeNotes: Updated GTM template vendor details
   # previous versions
+  - sha: e4d77478e09db124f9a83e99109888bc3d96f8a7
+    changeNotes: Updated GTM template vendor details
   - sha: 8d7a17a527d618638df63b20913114813a8c61b2
     changeNotes: Added GTM template vendor details
   - sha: 6ed70ee26f0b8e501c735997292df01d43d3d36e
