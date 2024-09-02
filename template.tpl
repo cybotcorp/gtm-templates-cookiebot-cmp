@@ -1032,10 +1032,10 @@ scenarios: []
 
 ___NOTES___
 Cookiebot CMP Tag v2.12
-* Add Cookiebot vendor details
+* Update Cookiebot vendor details
 
 Cookiebot CMP Tag v2.11
-* Update Cookiebot vendor details
+* Add Cookiebot vendor details
 
 Cookiebot CMP Tag v2.10
 * Add option to disable Advertiser Consent Mode when GCM is enabled
