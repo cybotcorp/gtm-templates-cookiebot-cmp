@@ -41,7 +41,7 @@ ___VENDOR_DETAILS___
   "homepageUrl": "https://www.cookiebot.com/en/cookiebot-cmp-for-google-ads/",
   "freeTrial": "14-day free trial",
   "freeTier": "Yes",
-  "price": "\u003cb\u003eExclusive Limited-Time Offer:\u003c/b\u003e\n\n\u003cul\u003e\u003cb\u003e6 months free\u003c/b\u003e\u003cli\u003e for sites with less than 350 subpages\u003c/li\u003e\n\u003cli\u003e\u003cb\u003e15% off for 6 months\u003c/b\u003e for sites with more than 350 subpages\u003c/li\u003e\u003c/ul\u003e\n\nAll packages include all premium features for unlimited page views",
+  "price": "\u003cb\u003eExclusive Limited-Time Offer:\u003c/b\u003e\n\n\u003cul\u003e\u003cli\u003e\u003cb\u003e6 months free\u003c/b\u003e for sites with less than 350 subpages\u003c/li\u003e\n\u003cli\u003e\u003cb\u003e15% off for 6 months\u003c/b\u003e for sites with more than 350 subpages\u003c/li\u003e\u003c/ul\u003e\n\nAll packages include all premium features for unlimited page views",
   "countries": "No limitations",
   "languages": [
     "ar",
@@ -96,7 +96,8 @@ ___VENDOR_DETAILS___
   "platforms": [
     "WEB"
   ],
-  "termsAndConditionsUrl": "https://www.cookiebot.com/en/privacy-and-terms/"
+  "termsAndConditionsUrl": "https://www.cookiebot.com/en/privacy-and-terms/",
+  "defaultSettingsUrl": "https://support.cookiebot.com/hc/en-us/articles/15654523704220-Cookiebot-CMP-default-banner-settings"
 }
 
 
@@ -1031,6 +1032,9 @@ scenarios: []
 
 
 ___NOTES___
+Cookiebot CMP Tag v2.12.2
+* Update Cookiebot vendor details
+
 Cookiebot CMP Tag v2.12.1
 * Update Cookiebot vendor details
 
