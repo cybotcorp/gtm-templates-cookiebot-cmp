@@ -41,7 +41,7 @@ ___VENDOR_DETAILS___
   "homepageUrl": "https://www.cookiebot.com/en/cookiebot-cmp-for-google-ads/",
   "freeTrial": "14-day free trial",
   "freeTier": "Yes",
-  "price": "\u003cb\u003eExclusive Limited-Time Offer:\u003c/b\u003e\n\n\u003cul\u003e\u003cli\u003e\u003cb\u003e6 months free\u003c/b\u003e for sites with less than 350 subpages\u003c/li\u003e\n\u003cli\u003e\u003cb\u003e15% off for 6 months\u003c/b\u003e for sites with more than 350 subpages\u003c/li\u003e\u003c/ul\u003e\n\nAll packages include all premium features for unlimited page views",
+  "price": "\u003cb\u003eExclusive Limited-Time Offer:\u003c/b\u003e\n\n\u003cul\u003e\u003cli\u003e\u003cb\u003e6 months free\u003c/b\u003e for sites with \u003c350 subpages\u003c/li\u003e\n\u003cli\u003e\u003cb\u003e15% off for 6 months\u003c/b\u003e for sites with \u003e350 subpages\u003c/li\u003e\u003c/ul\u003e\n\nAll plans include all premium features for unlimited page views. Free plan available for sites with 1 domain and \u003c50 subpages.",
   "countries": "No limitations",
   "languages": [
     "ar",
@@ -1032,6 +1032,9 @@ scenarios: []
 
 
 ___NOTES___
+Cookiebot CMP Tag v2.12.3
+* Update Cookiebot vendor details
+
 Cookiebot CMP Tag v2.12.2
 * Update Cookiebot vendor details
 
