@@ -3,7 +3,7 @@ documentation: "https://support.cookiebot.com/hc/en-us/articles/360003793854"
 versions:
   # latest version
   - sha: 063c4374cd3b9a94b863e1d0acc80b45e827e09c
-    changeNotes: Updated GTM template vendor details
+    changeNotes: (No template update, only meta-data) Updated GTM template vendor details
   # previous versions
   - sha: 95bae073666d91d0f5d7c88cca9fb977ba4b65d6
     changeNotes: Updated GTM template vendor details
