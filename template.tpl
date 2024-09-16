@@ -1036,25 +1036,25 @@ scenarios: []
 
 ___NOTES___
 Cookiebot CMP Tag v2.12.5
-* Update Cookiebot vendor details
+* (No template update, only meta-data): Update Cookiebot vendor details
 
 Cookiebot CMP Tag v2.12.4
-* Update Cookiebot vendor details
+* (No template update, only meta-data): Update Cookiebot vendor details
 
 Cookiebot CMP Tag v2.12.3
-* Update Cookiebot vendor details
+* (No template update, only meta-data): Update Cookiebot vendor details
 
 Cookiebot CMP Tag v2.12.2
-* Update Cookiebot vendor details
+* (No template update, only meta-data): Update Cookiebot vendor details
 
 Cookiebot CMP Tag v2.12.1
-* Update Cookiebot vendor details
+* (No template update, only meta-data): Update Cookiebot vendor details
 
 Cookiebot CMP Tag v2.12
-* Update Cookiebot vendor details
+* (No template update, only meta-data): Update Cookiebot vendor details
 
 Cookiebot CMP Tag v2.11
-* Add Cookiebot vendor details
+* (No template update, only meta-data): Add Cookiebot vendor details
 
 Cookiebot CMP Tag v2.10
 * Add option to disable Advertiser Consent Mode when GCM is enabled
