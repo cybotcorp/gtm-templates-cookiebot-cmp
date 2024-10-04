@@ -42,8 +42,8 @@ ___VENDOR_DETAILS___
   "vendorName": "Cookiebot by Usercentrics",
   "description": "\u003cb\u003eEurope’s leading CMP\u003c/b\u003e, a highly automated solution designed for SMBs that \u003cb\u003eoffers the easiest setup, customizable banners, and seamless integration with your existing tech stack\u003c/b\u003e. Join 2M+ websites and collect consented user data to boost marketing performance effortlessly.",
   "homepageUrl": "https://www.cookiebot.com/en/cookiebot-cmp-for-google-ads/",
-  "freeTrial": "14-day free trial",
-  "freeTier": "Yes",
+  "freeTrial": "14-day trial + 6 months free",
+  "freeTier": "Free forever plan available",
   "price": "Plans starting at €7.\u003cbr/\u003e\u003cbr/\u003e\n\u003cb\u003eGet 6 months for free\u003c/b\u003e\u003cbr/\u003e\nCookiebot Premium for sites with \u003c350 subpages.\u003cbr/\u003e\u003cbr/\u003e\n\u003cb\u003e15% discount for 6 months\u003c/b\u003e\u003cbr/\u003e\nCookiebot Premium for sites with \u003e350 subpages.\u003cbr/\u003e\u003cbr/\u003e\nFree forever\u2028plan for \u003c50 subpages",
   "countries": "No limitations",
   "languages": [
@@ -1035,6 +1035,9 @@ scenarios: []
 
 
 ___NOTES___
+Cookiebot CMP Tag v2.12.6
+* (No template update, only meta-data): Update Cookiebot vendor details
+
 Cookiebot CMP Tag v2.12.5
 * (No template update, only meta-data): Update Cookiebot vendor details
 
